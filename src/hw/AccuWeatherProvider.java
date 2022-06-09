@@ -1,8 +1,11 @@
 package hw;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import hw.entities.CurrentWeatherResponse;
+import hw.entities.ForecastResponse;
 import hw.enums.Periods;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -10,6 +13,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class AccuWeatherProvider implements WeatherProvider {
     private static final String BASE_HOST = "dataservice.accuweather.com";
@@ -43,11 +48,58 @@ public class AccuWeatherProvider implements WeatherProvider {
                     .url(url)
                     .build();
 
-            Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
-            // TODO: Сделать в рамках д/з вывод более приятным для пользователя.
-            //  Создать класс WeatherResponse, десериализовать ответ сервера в экземпляр класса
-            //  Вывести пользователю только текущую температуру в C и сообщение (weather text)
+            try (Response response = client.newCall(request).execute()) {
+                var body = response.body();
+                if (body != null) {
+                    var json = body.string();
+                    var list = objectMapper.readValue(json, new TypeReference<List<CurrentWeatherResponse>>() { });
+                    var item = list.get(0);
+                    System.out.printf(
+                            "Температура в '%s' %.1f%s.\n",
+                            ApplicationGlobalState.getInstance().getSelectedCity(),
+                            item.getTemperature().getMetric().getValue(), item.getTemperature().getMetric().getUnit());
+                    System.out.println();
+                }
+            }
+        } else if (periods.equals(Periods.FIVE_DAYS)) {
+            var url = new HttpUrl.Builder()
+                    .scheme("http")
+                    .host(BASE_HOST)
+                    .addPathSegment(FORECAST_ENDPOINT)
+                    .addPathSegment(API_VERSION)
+                    .addPathSegment("daily")
+                    .addPathSegment("5day")
+                    .addPathSegment(cityKey)
+                    .addQueryParameter("apikey", ApplicationGlobalState.getInstance().getApiKey())
+                    .addQueryParameter("language", "ru-ru")
+                    .addQueryParameter("metric", "true")
+                    .build();
+
+            var request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            try (var response = client.newCall(request).execute()) {
+                var body = response.body();
+                if (body != null) {
+                    var json = body.string();
+                    var root = objectMapper.readValue(json, ForecastResponse.class);
+                    for (var forecast : root.getForecasts()) {
+                        System.out.printf(
+                                "В городе '%s' на дату '%s' ожидается: днем '%s', ночью '%s', температура от %.1f%s до %.1f%s.\n",
+                                ApplicationGlobalState.getInstance().getSelectedCity(),
+                                DateTimeFormatter.ofPattern("dd.MM.yyyy").format(forecast.getDate()),
+                                forecast.getDay().getIconPhrase()
+                                        + (forecast.getDay().isHasPrecipitation() ? ", с осадками" : ", без осадков"),
+                                forecast.getNight().getIconPhrase()
+                                        + (forecast.getNight().isHasPrecipitation() ? ", с осадками" : ", без осадков"),
+                                forecast.getTemperature().getMinimum().getValue(), forecast.getTemperature().getMinimum().getUnit(),
+                                forecast.getTemperature().getMaximum().getValue(), forecast.getTemperature().getMaximum().getUnit()
+                        );
+                    }
+                    System.out.println();
+                }
+            }
         }
     }
 

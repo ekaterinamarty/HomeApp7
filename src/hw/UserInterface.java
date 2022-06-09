@@ -34,7 +34,6 @@ public class UserInterface {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
