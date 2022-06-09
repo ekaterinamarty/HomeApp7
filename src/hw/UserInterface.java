@@ -10,17 +10,17 @@ public class UserInterface {
     public void runApplication() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println(
+                    "Выберите действие: " +
+                            "1 - Получить текущую погоду, " +
+                            "2 - Получить погоду на следующие 5 дней, " +
+                            "выход (exit) - завершить работу");
+            String result = scanner.nextLine();
+            checkIsExit(result);
+
             System.out.println("Введите название города на английском языке");
             String city = scanner.nextLine();
-
             setGlobalCity(city);
-
-            System.out.println("Введите ответ: 1 - Получить текущую погоду, " +
-                    "2 - Получить погоду на следующие 5 дней, " +
-                    "выход (exit) - завершить работу");
-            String result = scanner.nextLine();
-
-            checkIsExit(result);
 
             try {
                 validateUserInput(result);

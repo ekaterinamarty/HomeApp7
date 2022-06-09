@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1809784a-3175-42ec-9497-63627ac703ad" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HomeApp7.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/AccuWeatherProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/ApplicationGlobalState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/MainApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/UserInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/WeatherProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/enums/Functionality.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hw/enums/Periods.java" afterDir="false" />
-    </list>
+    <list default="true" id="1809784a-3175-42ec-9497-63627ac703ad" name="Changes" comment="Initial commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,6 +63,14 @@
       <option name="presentableId" value="Default" />
       <updated>1654715065281</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <created>1654766696730</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1654766696730</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -91,5 +83,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
   </component>
 </project>
